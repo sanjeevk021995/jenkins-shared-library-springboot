@@ -32,7 +32,7 @@ agent {
   stage('Build Image') {
     steps {
       container('kaniko') {
-        buildImageKaniko(IMAGE_NAME, TAG)
+        buildImage(IMAGE_NAME, TAG)
       }
     }
   }
@@ -40,18 +40,12 @@ agent {
   stage('Security Scan') {
     steps {
       container('trivy') {
-        securityScanTrivy(IMAGE_NAME, TAG)
+        securityScan(IMAGE_NAME, TAG)
       }
     }
   }
 
-  stage('Push Image') {
-    steps {
-      container('kaniko') {
-        pushImage(IMAGE_NAME, TAG)
-      }
-    }
-  }
+
 
   stage('Deploy') {
 
@@ -59,7 +53,7 @@ agent {
 
     container('helm') {
 
-      helmDeploy("./helm/springboot-chart",
+      deployHelmChart("./helm/springboot-chart",
                  "springboot-demo",
                  IMAGE_NAME,
                  TAG)
