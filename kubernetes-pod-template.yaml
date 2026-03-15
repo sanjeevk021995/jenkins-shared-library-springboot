@@ -59,6 +59,8 @@ spec:
     env:
       - name: DOCKER_CONFIG
         value: /root/.docker
+      - name: TRIVY_DB_REPOSITORY
+        value: public.ecr.aws/aquasecurity/trivy-db-light
     volumeMounts:
     - name: docker-config
       mountPath: /root/.docker
