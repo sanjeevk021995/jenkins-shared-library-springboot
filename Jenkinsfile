@@ -59,7 +59,7 @@ agent {
 
     container('helm') {
 
-      helmDeploy("./helm",
+      helmDeploy("./helm/springboot-chart",
                  "springboot-demo",
                  IMAGE_NAME,
                  TAG)
