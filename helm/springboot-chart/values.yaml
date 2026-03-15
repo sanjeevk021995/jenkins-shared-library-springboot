@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/sanjeevk95/springboot-demo
+  tag: 53
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: dockerhub-secret
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+fluentbit:
+  image: fluent/fluent-bit
+  tag: latest
+  resources:
+    limits:
+      cpu: 100m
+      memory: 64Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
+
+logVolume:
+  mountPath: /logs
+
+fluentbitConfig:
+  logPath: /logs/app.log
+
